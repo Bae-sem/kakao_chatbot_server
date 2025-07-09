@@ -1,0 +1,13 @@
+미들웨어 서버 주소:
+https://kakao-chatbot-server-2yy0.onrender.com/skill-ui-test-raw
+
+
+미들웨어 서버 배포 Render:
+https://dashboard.render.com/
+깃허브 로그인
+
+openai key 위치: 
+.env
+
+openai 로그인:
+구글 로그인
