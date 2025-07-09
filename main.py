@@ -2,6 +2,10 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -16,15 +20,20 @@ async def skill_ui_test(params: KakaoRequestParams):
         "input": params.input
     }
 
+    api_key = os.getenv("OPENAI_API_KEY")
+
     headers = {
-        "Authorization": "Bearer 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",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
 
     response = requests.post("https://api.openai.com/v1/responses", headers=headers, json=gpt_payload)
     gpt_result = response.json()
-    # print(gpt_result)
-    reply_text = gpt_result["output"][0]["content"][0]["text"]
+
+    try:
+        reply_text = gpt_result["output"][0]["content"][0]["text"]
+    except Exception:
+        reply_text = "GPT 응답을 불러오는 데 실패했습니다."
 
     kakao_response = {
         "version": "2.0",
