@@ -91,20 +91,22 @@ async def skill_ui_test_raw(request: Request):
         model = "gpt-4.1-nano"
         user_input = None
 
-        if data.action and data.action.params:
-            # model = data.action.params.model
+        # ✅ 1차: action.params
+        if data.action and data.action.params and data.action.params.input:
             user_input = data.action.params.input
-        elif data.action and data.action.detailParams:
-            detail = data.action.detailParams
-            # model = detail.get("model", {}).get("value")
-            user_input = detail.get("input", {}).get("value")
-        else:
-            # model = data.model
-            user_input = data.input
 
-        # if not model or not user_input:
-        if not user_input:    
-            return kakao_error_response("모델이나 입력값이 누락되었습니다.")
+        # ✅ 2차: action.detailParams.input.value
+        elif data.action and data.action.detailParams:
+            user_input = data.action.detailParams.get("input", {}).get("value")
+
+        # ✅ 3차: 직접 파싱한 raw JSON에서 userRequest.utterance 추출
+        if not user_input:
+            import json
+            parsed = json.loads(body)
+            user_input = parsed.get("userRequest", {}).get("utterance")
+
+        if not user_input:
+            return kakao_error_response("입력값이 누락되었습니다.")
 
         return await handle_skill_request(model, user_input)
 
