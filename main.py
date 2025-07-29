@@ -82,9 +82,11 @@ async def skill_ui_test(data: UIRequestBody = Body(...)):
     return await handle_skill_request(data.model, data.input)
 
 @app.post("/skill-ui-test-raw", tags=["Kakao Chatbot Webhook"])
-async def skill_ui_test_raw(data: KakaoRequestBody = Body(...)):
+async def skill_ui_test_raw(request: Request):
     try:
-        print("📥 받은 JSON (RAW):", data)
+        body = await request.body()
+        print("📥 원본 JSON:", body.decode("utf-8"))
+        data = KakaoRequestBody.parse_raw(body)
 
         model = "gpt-4.1-nano"
         user_input = None
