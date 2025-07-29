@@ -86,21 +86,22 @@ async def skill_ui_test_raw(data: KakaoRequestBody = Body(...)):
     try:
         print("📥 받은 JSON (RAW):", data)
 
-        model = None
+        model = "gpt-4.1-nano"
         user_input = None
 
         if data.action and data.action.params:
-            model = data.action.params.model
+            # model = data.action.params.model
             user_input = data.action.params.input
         elif data.action and data.action.detailParams:
             detail = data.action.detailParams
-            model = detail.get("model", {}).get("value")
+            # model = detail.get("model", {}).get("value")
             user_input = detail.get("input", {}).get("value")
         else:
-            model = data.model
+            # model = data.model
             user_input = data.input
 
-        if not model or not user_input:
+        # if not model or not user_input:
+        if not user_input:    
             return kakao_error_response("모델이나 입력값이 누락되었습니다.")
 
         return await handle_skill_request(model, user_input)
