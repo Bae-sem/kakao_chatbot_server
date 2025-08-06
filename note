@@ -2,6 +2,10 @@
 https://kakao-chatbot-server-2yy0.onrender.com/skill-ui-test-raw
 
 
+redis cloud 주소: https://cloud.redis.io/
+redis cloud 로그인: 구글로그인
+render env에 openai, redis cloud key있음
+
 미들웨어 서버 배포 Render:
 https://dashboard.render.com/
 깃허브 로그인
