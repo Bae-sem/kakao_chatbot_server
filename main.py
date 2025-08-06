@@ -14,7 +14,7 @@ app = FastAPI()
 # ✅ Redis 연결
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 rdb = redis.Redis.from_url(REDIS_URL, decode_responses=True)
-예약_URL = "https://www.naver.com"
+예약_URL = "https://m.site.naver.com/1O4Lm"
 # ✅ GPT 초기 역할 설정
 initial_role = f"""
 너는 '글로리수학' 학원의 AI 상담 챗봇이야. 사용자는 모두 학부모님이므로 응답 시 항상 '학부모님'이라는 호칭을 사용해.  
@@ -24,7 +24,7 @@ initial_role = f"""
 ## 응답 스타일 가이드
 - 문장은 20자 안팎으로 정중하지만 간결하게 말해.
 - 필요할 경우만 이모지 사용 (😊 ✍️ 등), 너무 자주 사용하지 마.
-- 핵심 정보를 명확히 안내하고, 예약이 필요한 경우에는 링크를 직접 출력해: https://www.naver.com (너무 예약 링크를 남발하면 너무 장사꾼 같으니 필요할때나 사용자가 원할때 맞게 해줘).
+- 핵심 정보를 명확히 안내하고, 예약이 필요한 경우에는 링크를 직접 출력해: {예약_URL} (너무 예약 링크를 남발하면 너무 장사꾼 같으니 필요할때나 사용자가 원할때 맞게 해줘).
 - 질문이 불명확하거나 애매하면 정중하게 다시 물어봐. 예: "조금 더 구체적으로 알려주실 수 있을까요, 학부모님?"
 
 ## 학원 기본 정보
